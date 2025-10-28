@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beranda - Lion Yellow</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+.app-container {
+  width: 100%;
+  max-width: 450px;
+  flex-grow: 1;
+  padding-bottom: 70px;
+}
+.app-header {
+  background: #ffc107;
+  color: #000;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.balance-box {
+  background: #fff;
+  margin: 15px;
+  padding: 20px 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(28,12,12,0.15);
+}
+.balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.balance-amount {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0 15px 0;
+}
+.functional-menu-alt {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  margin: 0 15px 15px 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+}
+.menu-item {
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  font-size: 12px;
+}
+.menu-item .menu-icon-circle {
+  background: #fff3c9;
+  color: #ffc107;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 5px auto;
+  font-size: 20px;
+  border: 1px solid #ffc107;
+}
+</style>
+</head>
+<body>
+<div class="app-container">
+  <header class="app-header">
+    <span><i class="fas fa-home"></i></span>
+    <span>Beranda</span>
+    <span><i class="fas fa-bars"></i></span>
+  </header>
+
+  <div class="balance-box">
+    <div class="balance-header">
+      <span>Total Saldo (IDR)</span>
+      <span class="toggle-icon" id="toggleBalance"><i class="fas fa-eye"></i></span>
+    </div>
+    <div class="balance-amount" id="balanceAmount">Rp0</div>
+    <div style="font-size:13px;color:#777;">Saldo Anda diperbarui otomatis setelah klaim bonus.</div>
+  </div>
+
+  <div class="functional-menu-alt">
+    <a href="kode.html" class="menu-item">
+      <span class="menu-icon-circle"><i class="fas fa-gift"></i></span>
+      <span>Klaim Bonus</span>
+    </a>
+    <a href="#" class="menu-item">
+      <span class="menu-icon-circle"><i class="fas fa-plus"></i></span>
+      <span>Isi Ulang</span>
+    </a>
+    <a href="#" class="menu-item">
+      <span class="menu-icon-circle"><i class="fas fa-exchange-alt"></i></span>
+      <span>Penarikan</span>
+    </a>
+  </div>
+</div>
+
+<script>
+// === Load saldo dari localStorage ===
+document.addEventListener("DOMContentLoaded", () => {
+  const saldoElement = document.getElementById("balanceAmount");
+  let userData = JSON.parse(localStorage.getItem("userData")) || { saldo: 5000 }; // default Rp5.000
+
+  saldoElement.textContent = "Rp" + userData.saldo.toLocaleString("id-ID");
+});
+
+// === Tombol Sembunyikan Saldo ===
+document.getElementById('toggleBalance').addEventListener('click', function() {
+  const amountElement = document.getElementById('balanceAmount');
+  const icon = this.querySelector('i');
+  if (amountElement.textContent.includes('*')) {
+    let user = JSON.parse(localStorage.getItem("userData")) || { saldo: 5000 };
+    amountElement.textContent = "Rp" + user.saldo.toLocaleString("id-ID");
+    icon.classList.replace('fa-eye-slash', 'fa-eye');
+  } else {
+    amountElement.textContent = '*******';
+    icon.classList.replace('fa-eye', 'fa-eye-slash');
+  }
+});
+</script>
+</body>
+</html>
